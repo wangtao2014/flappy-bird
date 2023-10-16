@@ -1,0 +1,6 @@
+AnimationPlayer
+Label
+Node
+CollisionShape2D
+StaticBody2D
+Timer

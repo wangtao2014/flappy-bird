@@ -1,0 +1,213 @@
+[gd_scene load_steps=18 format=3 uid="uid://ddqs6je837ray"]
+
+[ext_resource type="Texture2D" uid="uid://drtvvgfljw7mv" path="res://FlappyBirdAssets/img/bg.jpg" id="1_mdg7g"]
+[ext_resource type="Script" path="res://Scripts/Game.gd" id="1_pcvqf"]
+[ext_resource type="Texture2D" uid="uid://b002of17i50sw" path="res://FlappyBirdAssets/img/back.png" id="2_atc5w"]
+[ext_resource type="Script" path="res://Scripts/Bird.gd" id="3_66e6y"]
+[ext_resource type="Texture2D" uid="uid://coslraua48wyc" path="res://FlappyBirdAssets/img/bird.png" id="3_vqwpm"]
+[ext_resource type="Script" path="res://Scripts/PipeManager.gd" id="5_0ywqh"]
+[ext_resource type="PackedScene" uid="uid://3tj6go14yf0a" path="res://Objects/ui.tscn" id="6_q7usn"]
+
+[sub_resource type="Animation" id="Animation_kfwoj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Floor_2:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(512.33, 2.08165e-12)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Floor_1:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_efnd5"]
+resource_name = "scroll"
+length = 6.00001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Floor_1:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.9, 3, 5.9),
+"transitions": PackedFloat32Array(1, 1e-05, 1, 1),
+"update": 0,
+"values": [Vector2(2.08165e-12, 2.08165e-12), Vector2(-530, 2.08165e-12), Vector2(512.33, 2.08165e-12), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Floor_2:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5.9),
+"transitions": PackedFloat32Array(1, 1e-05),
+"update": 0,
+"values": [Vector2(512.33, 2.08165e-12), Vector2(-530, 2.08165e-12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pmkw4"]
+_data = {
+"RESET": SubResource("Animation_kfwoj"),
+"scroll": SubResource("Animation_efnd5")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xokbe"]
+radius = 55.0
+
+[sub_resource type="Animation" id="Animation_y8twh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_wh38s"]
+resource_name = "die"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_fxw4x"]
+resource_name = "fly"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lk0tk"]
+_data = {
+"RESET": SubResource("Animation_y8twh"),
+"die": SubResource("Animation_wh38s"),
+"fly": SubResource("Animation_fxw4x")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jucnp"]
+size = Vector2(898, 82)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21u16"]
+size = Vector2(890, 77)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_pcvqf")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(375, 667)
+scale = Vector2(3, 3)
+texture = ExtResource("1_mdg7g")
+
+[node name="Floor_1" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(393, 665)
+scale = Vector2(3, 3)
+texture = ExtResource("2_atc5w")
+
+[node name="Floor_2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(393, 665)
+scale = Vector2(3, 3)
+texture = ExtResource("2_atc5w")
+offset = Vector2(512.33, 2.08165e-12)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "scroll"
+libraries = {
+"": SubResource("AnimationLibrary_pmkw4")
+}
+
+[node name="Bird" type="RigidBody2D" parent="."]
+position = Vector2(366, 440)
+mass = 0.1
+gravity_scale = 6.0
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("3_66e6y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bird"]
+position = Vector2(-5, -10)
+shape = SubResource("CircleShape2D_xokbe")
+debug_color = Color(0.941176, 0.176471, 0.415686, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bird"]
+autoplay = "fly"
+libraries = {
+"": SubResource("AnimationLibrary_lk0tk")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="Bird"]
+position = Vector2(-2, -10)
+scale = Vector2(2, 2)
+texture = ExtResource("3_vqwpm")
+hframes = 3
+
+[node name="PipeManager" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+script = ExtResource("5_0ywqh")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="StaticBody2D_Ceiling" type="StaticBody2D" parent="Walls"]
+position = Vector2(-72, -72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D_Ceiling"]
+position = Vector2(439, 31)
+shape = SubResource("RectangleShape2D_jucnp")
+
+[node name="StaticBody2D_Floor" type="StaticBody2D" parent="Walls"]
+position = Vector2(-64, 1037)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D_Floor"]
+position = Vector2(435, 28.5)
+shape = SubResource("RectangleShape2D_21u16")
+debug_color = Color(0.905882, 0.2, 0.576471, 0.419608)
+
+[node name="UI" parent="." instance=ExtResource("6_q7usn")]
+offset_top = 8.0
+offset_bottom = 8.0
