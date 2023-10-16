@@ -2,17 +2,10 @@ extends Timer
 
 var pipe_scn = preload("res://Objects/pipe.tscn") # 将要实例化的场景文件预加载进来
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("GAME_STATE")#加入GAME_STATE组
 	timeout.connect(_on_timeout)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
 
 func _on_timeout():
 	var pipe = pipe_scn.instantiate() # 实例化

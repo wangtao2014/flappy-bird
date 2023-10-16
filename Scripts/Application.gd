@@ -5,7 +5,7 @@ var game_tscn = preload("res://game.tscn")#把"Game.tscn"预加载进来
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("GAME_STATE") #把自己加入"GAME_STATE"组
-	get_tree().call_group("GAME_STATE","on_game_start")#调用"GAME_STATE"组的"on_game_start"方法
+	get_tree().call_group("GAME_STATE", "on_game_start")#调用"GAME_STATE"组的"on_game_start"方法
 	
 func on_game_start():
 	var game = get_node_or_null("Game")#判断是否有名为"Game"的子节点
@@ -14,8 +14,3 @@ func on_game_start():
 		game.queue_free()
 	game = game_tscn.instantiate()#然后实例化一个新的"Game.tscn"并作为自己的子节点，开始新的一局
 	add_child(game)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

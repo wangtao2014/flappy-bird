@@ -1,16 +1,15 @@
 extends RigidBody2D
 
+# 画面帧 和 物理帧 的区别？
+# https://reimenn.github.io/MyGDSciprtBook/Part-%E5%BC%95%E6%93%8E%E4%BA%A4%E4%BA%92/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F2.html
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	body_entered.connect(_on_body_entered)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 	
-	
-func _physics_process(delta):
+# 玩家移动，开门关门
+func _physics_process(_delta):
 	if Input.is_mouse_button_pressed(1): # 当按鼠标左键时
 		AudioManager.play("sfx_swooshing") # 音效
 		linear_velocity = Vector2.UP * 500 # 给它一个竖直向上的线性速度
